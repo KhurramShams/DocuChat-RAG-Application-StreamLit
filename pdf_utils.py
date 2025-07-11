@@ -20,7 +20,7 @@ def load_environment():
     load_dotenv()
     #PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
     #OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-    PINECONE_API_KEY = ["pinecone"]["pineconeapi_key"]
+    PINECONE_API_KEY = st.secrets["pinecone"]["pineconeapi_key"]
     OPENAI_API_KEY = st.secrets["openai"]["openapi_key"]
     if not PINECONE_API_KEY or not OPENAI_API_KEY:
         raise ValueError("Missing API keys. Please set PINECONE_API_KEY and OPENAI_API_KEY.")
