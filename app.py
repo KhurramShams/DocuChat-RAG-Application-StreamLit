@@ -49,7 +49,8 @@ except Exception as e:
 try:
     vector_store = PineconeVectorStore(
     index_name="rag-index",
-    embedding=embedding_function
+    embedding=embedding_function,
+    pinecone_api_key=PINECONE_API_KEY
     )
 except Exception as e:
     st.error(f"Error initializing DataBase: {str(e)}")
