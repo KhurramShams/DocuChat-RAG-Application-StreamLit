@@ -1,3 +1,4 @@
+import streamlit as st
 from langchain.text_splitter import RecursiveCharacterTextSplitter 
 import os
 from dotenv import load_dotenv
