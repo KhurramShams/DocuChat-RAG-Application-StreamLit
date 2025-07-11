@@ -99,7 +99,7 @@ def store_chunks_in_pinecone(chunks, embedding_function,pinecone_api_key,index_n
             embedding=embedding_function,
             index_name=index_name,
             metadatas=metadatas,
-            pinecone_api_key=pinecone_api_key
+            api_key=pinecone_api_key
         )
         logger.info(f"Stored {len(chunks)} chunks in Pinecone")
         return vector_store
