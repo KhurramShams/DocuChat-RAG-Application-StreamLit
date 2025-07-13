@@ -91,7 +91,7 @@ def _get_pymupdf():
         )
 
 
-def store_chunks_in_pinecone(chunks, embedding_function, pinecone_environment="us-east-1-aws",index_name="rag-index", pdf_hash="unknown"):
+def store_chunks_in_pinecone(chunks, embedding_function, index_name="rag-index", pdf_hash="unknown"):
     try:
         metadatas = [{"doc_hash": pdf_hash, "chunk_id": i} for i in range(len(chunks))]
         PINECONE_API_KEY = st.secrets["pinecone"]["pineconeapi_key"]
@@ -100,8 +100,7 @@ def store_chunks_in_pinecone(chunks, embedding_function, pinecone_environment="u
             embedding=embedding_function,
             index_name=index_name,
             metadatas=metadatas,
-            api_key=PINECONE_API_KEY,
-            environment="us-east-1-aws"
+            pinecone_api_key=PINECONE_API_KEY,
         )
         logger.info(f"Stored {len(chunks)} chunks in Pinecone")
         return vector_store
