@@ -99,7 +99,6 @@ def store_chunks_in_pinecone(chunks, embedding_function, index_name="rag-index",
         
         PINECONE_API_KEY = st.secrets["pinecone"]["pineconeapi_key"]
         os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
-        st.text(f"Environment PINECONE_API_KEY: {os.getenv('PINECONE_API_KEY')}")
         
         vector_store = PineconeVectorStore.from_texts(
             texts=chunks,
