@@ -129,6 +129,10 @@ if Display:
                 st.error("❌ Error in pdf validation." + st.session_state.pdf_msg)
         else:
             st.success("✅ Document already indexed.")
+            # ensure downstream checks don’t crash
+            st.session_state.pdf_validated = True
+            st.session_state.pdf_msg = "Document already indexed."
+
             
 
     if file and st.session_state.pdf_validated:
