@@ -160,8 +160,7 @@ def process_pdf_and_split(file_content, chunk_size=500, chunk_overlap=50):
 
 def create_rag_prompt_template():
     template = """
-You are a helpful assistant. Use only the following context to answer the user's question.
-If the answer cannot be found in the context, respond with "I don't know based on the provided information."
+ You are a helpful assistant. If the input question is vague or lacks context, improve it by rephrasing it based on how users typically ask questions about documents.
 
 Context:
 {context}
