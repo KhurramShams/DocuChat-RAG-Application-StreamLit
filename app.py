@@ -95,6 +95,9 @@ if Display:
 
             if st.session_state.pdf_validated:
                 st.success("✅ " + st.session_state.pdf_msg)
+                pcdata = Pinecone(api_key=PINECONE_API_KEY)
+                indexes = pcdata.list_indexes()
+                st.text("Available indexes:", indexes)
                 chunks = process_pdf_and_split(file_content)
                 st.text(len(chunks))
                 st.text(f"Pinecone key length: {len(PINECONE_API_KEY)}")
