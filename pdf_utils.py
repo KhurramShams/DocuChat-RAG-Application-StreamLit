@@ -21,8 +21,10 @@ def load_environment():
     load_dotenv()
     #PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
     #OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+    
     PINECONE_API_KEY = st.secrets["pinecone"]["pineconeapi_key"]
     OPENAI_API_KEY = st.secrets["openai"]["openapi_key"]
+    
     if not PINECONE_API_KEY or not OPENAI_API_KEY:
         raise ValueError("Missing API keys. Please set PINECONE_API_KEY and OPENAI_API_KEY.")
     return PINECONE_API_KEY, OPENAI_API_KEY
@@ -94,14 +96,17 @@ def _get_pymupdf():
 def store_chunks_in_pinecone(chunks, embedding_function, index_name="rag-index", pdf_hash="unknown"):
     try:
         metadatas = [{"doc_hash": pdf_hash, "chunk_id": i} for i in range(len(chunks))]
+        
         PINECONE_API_KEY = st.secrets["pinecone"]["pineconeapi_key"]
+        
         vector_store = PineconeVectorStore.from_texts(
             texts=chunks,
             embedding=embedding_function,
-            index_name=index_name,
+            index_name="rag-index",
             metadatas=metadatas,
-            pinecone_api_key=PINECONE_API_KEY,
+            pinecone_api_key=PINECONE_API_KEY
         )
+        
         logger.info(f"Stored {len(chunks)} chunks in Pinecone")
         return vector_store
     except Exception as e:
