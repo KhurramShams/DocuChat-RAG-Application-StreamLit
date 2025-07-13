@@ -115,7 +115,7 @@ if Display:
                     
                     # vector_store=store_chunks_in_pinecone(chunks=chunks,embedding_function=embedding_function, pdf_hash=pdf_hash)
                     
-                    PINECONE_API_KEY = st.secrets["PINECONE_API_KEY"]
+                    PINECONE_API_KEY = st.secrets["pinecone"]["pineconeapi_key"]
                     os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
                     st.text(f"Environment PINECONE_API_KEY: {os.getenv('PINECONE_API_KEY')}")
 
