@@ -97,15 +97,7 @@ if Display:
             if st.session_state.pdf_validated:
                 st.success("✅ " + st.session_state.pdf_msg)
                 
-                
-                pcdata = Pinecone(api_key=PINECONE_API_KEY)
-                indexes = pcdata.list_indexes()
-                st.text(f"Available indexes: {indexes}")
-                st.success("✅ Working Fine....!")
-                
                 chunks = process_pdf_and_split(file_content)
-                st.text(len(chunks))
-                st.text(f"Pinecone key length: {len(PINECONE_API_KEY)}")
                 
                 if st.checkbox("🔍 View Chunks for Debugging"):
                     for i, c in enumerate(chunks):
@@ -113,20 +105,17 @@ if Display:
                         st.code(c[:500], language="markdown")
                 try:
                     
-                    # vector_store=store_chunks_in_pinecone(chunks=chunks,embedding_function=embedding_function, pdf_hash=pdf_hash)
+                    vector_store=store_chunks_in_pinecone(chunks=chunks,embedding_function=embedding_function, pdf_hash=pdf_hash)
                     
-                    PINECONE_API_KEY = st.secrets["pinecone"]["pineconeapi_key"]
-                    os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
-                    st.text(f"Environment PINECONE_API_KEY: {os.getenv('PINECONE_API_KEY')}")
-
-                    metadatas = [{"doc_hash": pdf_hash, "chunk_id": i} for i in range(len(chunks))]
-                    vector_store = PineconeVectorStore.from_texts(
-                        texts=chunks,
-                        embedding=embedding_function,
-                        index_name="rag-index",
-                        metadatas=metadatas,
-                        pinecone_api_key=PINECONE_API_KEY
-                    )
+                    # metadatas = [{"doc_hash": pdf_hash, "chunk_id": i} for i in range(len(chunks))]
+                    # vector_store = PineconeVectorStore.from_texts(
+                    #     texts=chunks,
+                    #     embedding=embedding_function,
+                    #     index_name="rag-index",
+                    #     metadatas=metadatas,
+                    #     pinecone_api_key=PINECONE_API_KEY
+                    # )
+                    
                     logger.info(f"Stored {len(chunks)} chunks in Pinecone")
                     st.success("✅ Successfully stored embeddings in Pinecone.")
                     store=False
