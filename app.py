@@ -100,7 +100,16 @@ if Display:
                         st.markdown(f"**Chunk {i+1}:**")
                         st.code(c[:500], language="markdown")
                 try:
-                    vector_store=store_chunks_in_pinecone(chunks=chunks,embedding_function=embedding_function, pdf_hash=pdf_hash)
+                    # vector_store=store_chunks_in_pinecone(chunks=chunks,embedding_function=embedding_function, pdf_hash=pdf_hash)
+                    st.text(f"Pinecone key length: {len(PINECONE_API_KEY)}")
+                    vector_store = PineconeVectorStore.from_texts(
+                        texts=chunks,
+                        embedding=embedding_function,
+                        index_name="rag-index",
+                        metadatas=metadatas,
+                        pinecone_api_key=PINECONE_API_KEY
+                    )
+                    logger.info(f"Stored {len(chunks)} chunks in Pinecone")
                     st.success("✅ Successfully stored embeddings in Pinecone.")
                     store=False
                 except Exception as e:
