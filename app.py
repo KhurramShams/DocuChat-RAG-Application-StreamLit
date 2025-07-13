@@ -110,16 +110,7 @@ if Display:
                 try:
                     
                     vector_store=store_chunks_in_pinecone(chunks=chunks,embedding_function=embedding_function, pdf_hash=pdf_hash)
-                    
-                    # metadatas = [{"doc_hash": pdf_hash, "chunk_id": i} for i in range(len(chunks))]
-                    # vector_store = PineconeVectorStore.from_texts(
-                    #     texts=chunks,
-                    #     embedding=embedding_function,
-                    #     index_name="rag-index",
-                    #     metadatas=metadatas,
-                    #     pinecone_api_key=PINECONE_API_KEY
-                    # )
-                    
+
                     logger.info(f"Stored {len(chunks)} chunks in Pinecone")
                     st.success("✅ Successfully stored embeddings in Pinecone.")
                     store=False
@@ -128,10 +119,11 @@ if Display:
             else:
                 st.error("❌ Error in pdf validation." + st.session_state.pdf_msg)
         else:
-            st.success("✅ Document already indexed.")
             # ensure downstream checks don’t crash
             st.session_state.pdf_validated = True
             st.session_state.pdf_msg = "Document already indexed."
+            st.success("✅ Document already indexed.")
+
 
             
 
