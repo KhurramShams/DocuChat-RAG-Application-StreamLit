@@ -56,6 +56,9 @@ except Exception as e:
     st.error(f"Error initializing DataBase: {str(e)}")
     st.stop()
 
+if not PINECONE_API_KEY:
+    raise ValueError("PINECONE_API_KEY is not set. Please set it in the environment or .env file.")
+
 #------------------------------------- Streamlit Ui Design
 Display=True
 st.set_page_config(page_title="Your RAG Assistant", page_icon=":material/smart_toy:",layout="centered")
@@ -109,7 +112,7 @@ if Display:
                         embedding=embedding_function,
                         index_name="rag-index",
                         metadatas=metadatas,
-                        api_key=PINECONE_API_KEY
+                        pinecone_api_key=PINECONE_API_KEY
                     )
                     logger.info(f"Stored {len(chunks)} chunks in Pinecone")
                     st.success("✅ Successfully stored embeddings in Pinecone.")
