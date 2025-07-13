@@ -93,7 +93,8 @@ if Display:
             if st.session_state.pdf_validated:
                 st.success("✅ " + st.session_state.pdf_msg)
                 chunks = process_pdf_and_split(file_content)
-                print(len(chunks))
+                st.text(len(chunks))
+                st.text(f"Pinecone key length: {len(PINECONE_API_KEY)}")
                 if st.checkbox("🔍 View Chunks for Debugging"):
                     for i, c in enumerate(chunks):
                         st.markdown(f"**Chunk {i+1}:**")
