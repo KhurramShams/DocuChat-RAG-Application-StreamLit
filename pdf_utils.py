@@ -171,6 +171,7 @@ Follow these rules strictly:
    • Use bullet points or numbered lists for multiple items if needed  
    • Bold key terms or section names if needed
 4️⃣ *Unknowns* – If the document doesn't help answer the question, you may still use your general knowledge to provide a helpful answer.  
+   • Do **not** respond with: `"The document doesn't contain that information."` unless instructed to.
 ---
 Context:
 {context}
@@ -178,7 +179,6 @@ Context:
 Question:
 {query}
 
-Now generate a helpful, well-formatted answer using the above rules.
 Answer:
 """
     return ChatPromptTemplate.from_template(template)
