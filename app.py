@@ -1,3 +1,4 @@
+
 import streamlit as st
 import os
 from dotenv import load_dotenv
@@ -95,18 +96,25 @@ if Display:
 
             if st.session_state.pdf_validated:
                 st.success("✅ " + st.session_state.pdf_msg)
+                
+                
                 pcdata = Pinecone(api_key=PINECONE_API_KEY)
                 indexes = pcdata.list_indexes()
                 st.text("Available indexes:", indexes)
+                st.success("✅ Working Fine....!")
+                
                 chunks = process_pdf_and_split(file_content)
                 st.text(len(chunks))
                 st.text(f"Pinecone key length: {len(PINECONE_API_KEY)}")
+                
                 if st.checkbox("🔍 View Chunks for Debugging"):
                     for i, c in enumerate(chunks):
                         st.markdown(f"**Chunk {i+1}:**")
                         st.code(c[:500], language="markdown")
                 try:
+                    
                     # vector_store=store_chunks_in_pinecone(chunks=chunks,embedding_function=embedding_function, pdf_hash=pdf_hash)
+                    
                     st.text(f"Pinecone key length: {PINECONE_API_KEY}")
                     
                     metadatas = [{"doc_hash": pdf_hash, "chunk_id": i} for i in range(len(chunks))]
