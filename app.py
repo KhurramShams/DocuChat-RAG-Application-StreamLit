@@ -67,7 +67,7 @@ st.set_page_config(page_title="Your RAG Assistant", page_icon=":material/smart_t
 if Display:
     # Desging App
     st.image("DcouChat_logo.jpg", width=150)
-    st.title("DocuChat–AI-Powered Document Assistant")
+    st.title("AI-Powered Document Assistant")
     st.write("""
                 **DocuChat** is a smart PDF-based assistant that allows you to upload a document and ask questions in natural language. It uses Retrieval-Augmented Generation (RAG) powered by LangChain, OpenAI, and Pinecone to provide accurate answers grounded in the document content. Whether it's resumes, reports, or study material, DocuChat helps you interact with complex PDFs in a conversational way.  
             ⚠️ *Note: Currently, DocuChat supports only one PDF at a time, with a limit of 5 pages or 10,000 words. Multi-document and long-format support are planned for future versions.*
