@@ -7,8 +7,7 @@
 
 <p align="center">
   <a href="https://docuchat-live.streamlit.app/" target="_blank"><img alt="Open in Streamlit" src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg"></a>
-  <a href="https://github.com/your‑username/DocuChat/blob/main/LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/License-MIT-green.svg"></a>
-  <a href="https://github.com/your‑username/DocuChat/actions"><img alt="CI status" src="https://github.com/your‑username/DocuChat/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/KhurramShams/DocuChat.code"><img alt="MIT License" src="https://img.shields.io/badge/License-MIT-green.svg"></a>
 </p>
 
 ---
