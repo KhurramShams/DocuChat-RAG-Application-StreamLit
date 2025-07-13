@@ -91,7 +91,7 @@ def _get_pymupdf():
         )
 
 
-def store_chunks_in_pinecone(chunks, embedding_function,pinecone_api_key,pinecone_environment="us-east-1-aws",index_name="rag-index", pdf_hash="unknown"):
+def store_chunks_in_pinecone(chunks, embedding_function, pinecone_environment="us-east-1-aws",index_name="rag-index", pdf_hash="unknown"):
     try:
         metadatas = [{"doc_hash": pdf_hash, "chunk_id": i} for i in range(len(chunks))]
         PINECONE_API_KEY = st.secrets["pinecone"]["pineconeapi_key"]
