@@ -118,11 +118,13 @@ if Display:
                     st.text(f"Pinecone key length: {PINECONE_API_KEY}")
                     
                     metadatas = [{"doc_hash": pdf_hash, "chunk_id": i} for i in range(len(chunks))]
+
                     vector_store = PineconeVectorStore.from_texts(
                         texts=chunks,
                         embedding=embedding_function,
                         index_name="rag-index",
                         metadatas=metadatas,
+                        pinecone_api_key=PINECONE_API_KEY
                     )
                     logger.info(f"Stored {len(chunks)} chunks in Pinecone")
                     st.success("✅ Successfully stored embeddings in Pinecone.")
