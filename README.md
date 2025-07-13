@@ -2,10 +2,6 @@
 <!--    DocuChat – README                                                -->
 <!-- ------------------------------------------------------------------- -->
 
-<p align="center">
-  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Fpremium-vector%2Fdocument-file-bubble-chat-logo_20148517.htm&psig=AOvVaw2qQVAwz8SGZS0N057QIjxr&ust=1752493588374000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJDXjMbhuY4DFQAAAAAdAAAAABAE" width="120" alt="DocuChat logo">
-</p>
-
 <h1 align="center">DocuChat 🔍💬</h1>
 <h4 align="center">The AI‑powered way to read, search, and chat with your PDFs</h4>
 
@@ -26,7 +22,7 @@ Upload a document, ask anything, and DocuChat responds with grounded, citation�
 |----------------------|-------------------------------------------------------------------------------|
 | **Typical uses**     | Résumé review, policy documents, research papers, lab protocols, meeting notes |
 | **Tech stack**       | Streamlit · LangChain · OpenAI · Pinecone · PyMuPDF                            |
-| **Live demo**        | [docuchat.streamlit.app](https://docuchat.streamlit.app)                      |
+| **Live demo**        | [docuchat-live.streamlit.app](https://docuchat-live.streamlit.app/)                      |
 | **Status**           | **Beta v0.5** – feedback welcome 🙌                                           |
 
 ---
@@ -41,12 +37,6 @@ Upload a document, ask anything, and DocuChat responds with grounded, citation�
 | 🔄 **Duplicate Detection** | SHA‑256 hash prevents re‑indexing of the same document |
 | 🖥 **Zero‑Install Front‑End** | Pure Streamlit interface—runs locally or on Streamlit Cloud |
 | 📝 **Extensible RAG Prompt** | Self‑contained prompt template in `pdf_utils.py` for easy tweaking |
-
----
-
-## 🖼 Demo
-
-*(Add a GIF or screenshot here—for example, a short Loom of uploading a PDF and asking a question.)*
 
 ---
 
