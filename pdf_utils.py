@@ -137,7 +137,7 @@ def validate_pdf(file_content) -> tuple[bool, str, str]:
     except Exception as e:
         return False, f"Error reading PDF: {str(e)}", ""
 
-def process_pdf_and_split(file_content, chunk_size=500, chunk_overlap=50):
+def process_pdf_and_split(file_content, chunk_size=1000, chunk_overlap=200):
     try:
         # Step 1: Read PDF with PyMuPDF
         fitz = _get_pymupdf() 
@@ -148,9 +148,9 @@ def process_pdf_and_split(file_content, chunk_size=500, chunk_overlap=50):
 
         # Step 2: Split using LangChain's RecursiveCharacterTextSplitter
         splitter = RecursiveCharacterTextSplitter(
-            chunk_size=500,
-            chunk_overlap=100,
-            separators=["\n\n", "\n", ".", "!", "?"]
+            chunk_size=1000,
+            chunk_overlap=200,
+            separators=["\n\n", "\n", ".", " ", ""]
         )
 
         chunks = splitter.split_text(full_text)
@@ -175,7 +175,10 @@ Answer:
 def query_llm_with_rag(query, vector_store, llm, top_k=5):
     try:
         # Retrieve relevant chunks
-        retriever = vector_store.as_retriever(search_kwargs={"k": top_k})
+        retriever = vector_store.as_retriever(
+            search_type="similarity",
+            search_kwargs={"k": top_k}
+        )
 
         retrieved_docs = retriever.get_relevant_documents(query)
 
