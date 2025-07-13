@@ -48,3 +48,82 @@ Upload a document, ask anything, and DocuChat responds with grounded, citation�
 git clone https://github.com/your‑username/DocuChat.git
 cd DocuChat
 pip install -r requirements.txt
+
+Here’s a complete **Quick Start** section formatted in one clean Markdown structure. You can directly paste this into your `README.md` **after the Key Features** section:
+
+---
+
+## ⚙️ Quick Start
+
+### 🧑‍💻 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/DocuChat.git
+cd DocuChat
+```
+
+### 📦 2. Install Dependencies
+
+Make sure you have **Python 3.10+** installed, then run:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 🔐 3. Set Up API Keys
+
+#### ➤ For Local Development:
+
+Create a file at `.streamlit/secrets.toml` with the following content:
+
+```toml
+[openai]
+openapi_key = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+[pinecone]
+pineconeapi_key = "pcd-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+pinecone_environment = "us-east-1"  # Use your Pinecone project’s region
+
+[index]
+index_name = "docuchat-index"
+```
+
+#### ➤ For Streamlit Cloud Deployment:
+
+1. Deploy the repo via [streamlit.io/cloud](https://streamlit.io/cloud).
+2. Go to **App settings → Secrets**.
+3. Add the same key-value pairs from the `.streamlit/secrets.toml` file above.
+
+---
+
+### 🚀 4. Run the Application
+
+Start your RAG-powered chatbot locally:
+
+```bash
+streamlit run app.py
+```
+
+The app will launch in your browser at `http://localhost:8501`.
+
+---
+
+### ☁️ 5. Optional – Deploy on Streamlit Cloud
+
+1. Push this repo to your GitHub account.
+2. Visit [streamlit.io/cloud](https://streamlit.io/cloud) and click **"New App"**.
+3. Select your GitHub repo and branch, then click **Deploy**.
+4. Add your API keys under **Settings → Secrets** as shown above.
+5. Your live RAG chatbot is ready to use!
+
+---
+
+### 🧪 How to Use
+
+* Upload a short PDF (maximum 5 pages).
+* Ask natural language questions based on its content.
+* Get accurate, context-aware answers powered by LangChain + OpenAI.
+* Use the **debug checkbox** to inspect text chunks if needed.
+
+
+
