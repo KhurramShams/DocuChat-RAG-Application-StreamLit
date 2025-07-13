@@ -101,7 +101,9 @@ if Display:
                         st.code(c[:500], language="markdown")
                 try:
                     # vector_store=store_chunks_in_pinecone(chunks=chunks,embedding_function=embedding_function, pdf_hash=pdf_hash)
-                    st.text(f"Pinecone key length: {len(PINECONE_API_KEY)}")
+                    st.text(f"Pinecone key length: {PINECONE_API_KEY}")
+                    
+                    metadatas = [{"doc_hash": pdf_hash, "chunk_id": i} for i in range(len(chunks))]
                     vector_store = PineconeVectorStore.from_texts(
                         texts=chunks,
                         embedding=embedding_function,
