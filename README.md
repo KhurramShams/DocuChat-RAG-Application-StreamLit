@@ -3,14 +3,14 @@
 <!-- ------------------------------------------------------------------- -->
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/your‑username/DocuChat/main/assets/docuchat_logo.svg" width="120" alt="DocuChat logo">
+  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Fpremium-vector%2Fdocument-file-bubble-chat-logo_20148517.htm&psig=AOvVaw2qQVAwz8SGZS0N057QIjxr&ust=1752493588374000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJDXjMbhuY4DFQAAAAAdAAAAABAE" width="120" alt="DocuChat logo">
 </p>
 
 <h1 align="center">DocuChat 🔍💬</h1>
 <h4 align="center">The AI‑powered way to read, search, and chat with your PDFs</h4>
 
 <p align="center">
-  <a href="https://docuchat.streamlit.app" target="_blank"><img alt="Open in Streamlit" src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg"></a>
+  <a href="https://docuchat-live.streamlit.app/" target="_blank"><img alt="Open in Streamlit" src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg"></a>
   <a href="https://github.com/your‑username/DocuChat/blob/main/LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/License-MIT-green.svg"></a>
   <a href="https://github.com/your‑username/DocuChat/actions"><img alt="CI status" src="https://github.com/your‑username/DocuChat/actions/workflows/ci.yml/badge.svg"></a>
 </p>
