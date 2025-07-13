@@ -27,7 +27,7 @@ except Exception as e:
 # Initialize Pinecone
 try:
     pc = initialize_pinecone(PINECONE_API_KEY)
-    st.success("Pinecone client initialized successfully")
+    # st.success("Pinecone client initialized successfully")
 except Exception as e:
     st.error(f"Error initializing Pinecone: {str(e)}")
     st.stop()
