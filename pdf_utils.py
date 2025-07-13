@@ -160,15 +160,15 @@ def process_pdf_and_split(file_content, chunk_size=1000, chunk_overlap=200):
 
 def create_rag_prompt_template():
     template = """
- You are a helpful assistant. If the input question is vague or lacks context, improve it by rephrasing it based on how users typically ask questions about documents.
+You are an intelligent assistant that answers questions based only on the given context.
 
 Context:
 {context}
 
-User Question:
+Question:
 {query}
 
-Answer:
+Answer in a complete sentence. If the answer is not in the context, say "The document doesn't contain that information."
 """
     return ChatPromptTemplate.from_template(template)
 
