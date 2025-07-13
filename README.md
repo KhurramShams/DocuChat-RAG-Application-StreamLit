@@ -37,23 +37,9 @@ Upload a document, ask anything, and DocuChat responds with grounded, citation�
 | 🔄 **Duplicate Detection** | SHA‑256 hash prevents re‑indexing of the same document |
 | 🖥 **Zero‑Install Front‑End** | Pure Streamlit interface—runs locally or on Streamlit Cloud |
 | 📝 **Extensible RAG Prompt** | Self‑contained prompt template in `pdf_utils.py` for easy tweaking |
-
 ---
 
-## ⚙️ Quick Start
-
-### 1. Clone & Install
-
-```bash
-git clone https://github.com/your‑username/DocuChat.git
-cd DocuChat
-pip install -r requirements.txt
-
-Here’s a complete **Quick Start** section formatted in one clean Markdown structure. You can directly paste this into your `README.md` **after the Key Features** section:
-
----
-
-## ⚙️ Quick Start
+## ⚙️ Quick Start (Run Locally)
 
 ### 🧑‍💻 1. Clone the Repository
 
@@ -62,68 +48,55 @@ git clone https://github.com/your-username/DocuChat.git
 cd DocuChat
 ```
 
-### 📦 2. Install Dependencies
+---
 
-Make sure you have **Python 3.10+** installed, then run:
+### 📦 2. Create a Virtual Environment (Optional but Recommended)
+
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+---
+
+### 📂 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 🔐 3. Set Up API Keys
+---
 
-#### ➤ For Local Development:
+### 🔐 4. Add Your API Keys
 
-Create a file at `.streamlit/secrets.toml` with the following content:
+Create a `.env` file in the root directory of the project and add the following:
 
-```toml
-[openai]
-openapi_key = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-
-[pinecone]
-pineconeapi_key = "pcd-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-pinecone_environment = "us-east-1"  # Use your Pinecone project’s region
-
-[index]
-index_name = "docuchat-index"
+```env
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+PINECONE_API_KEY=pcd-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-#### ➤ For Streamlit Cloud Deployment:
-
-1. Deploy the repo via [streamlit.io/cloud](https://streamlit.io/cloud).
-2. Go to **App settings → Secrets**.
-3. Add the same key-value pairs from the `.streamlit/secrets.toml` file above.
+> ⚠️ Make sure your `.env` file is listed in `.gitignore` to avoid committing sensitive keys.
 
 ---
 
-### 🚀 4. Run the Application
-
-Start your RAG-powered chatbot locally:
+### 🚀 5. Run the Streamlit App
 
 ```bash
 streamlit run app.py
 ```
 
-The app will launch in your browser at `http://localhost:8501`.
+The app will open in your browser at:
+
+```
+http://localhost:8501
+```
 
 ---
 
-### ☁️ 5. Optional – Deploy on Streamlit Cloud
+### 📄 How to Use
 
-1. Push this repo to your GitHub account.
-2. Visit [streamlit.io/cloud](https://streamlit.io/cloud) and click **"New App"**.
-3. Select your GitHub repo and branch, then click **Deploy**.
-4. Add your API keys under **Settings → Secrets** as shown above.
-5. Your live RAG chatbot is ready to use!
-
----
-
-### 🧪 How to Use
-
-* Upload a short PDF (maximum 5 pages).
-* Ask natural language questions based on its content.
-* Get accurate, context-aware answers powered by LangChain + OpenAI.
-* Use the **debug checkbox** to inspect text chunks if needed.
-
-
-
+1. Upload a PDF file (up to **5 pages**, max **10,000 words**).
+2. DocuChat will validate the PDF and extract chunks.
+3. Ask any question based on the PDF's content.
+4. Get instant, accurate answers from the LLM, grounded in your document.
