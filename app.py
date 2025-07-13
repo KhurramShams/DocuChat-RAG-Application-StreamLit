@@ -99,7 +99,7 @@ if Display:
                         st.markdown(f"**Chunk {i+1}:**")
                         st.code(c[:500], language="markdown")
                 try:
-                    vector_store=store_chunks_in_pinecone(chunks=chunks,embedding_function=embedding_function, pdf_hash=pdf_hash,pinecone_api_key=PINECONE_API_KEY)
+                    vector_store=store_chunks_in_pinecone(chunks=chunks,embedding_function=embedding_function, pdf_hash=pdf_hash)
                     st.success("✅ Successfully stored embeddings in Pinecone.")
                     store=False
                 except Exception as e:
