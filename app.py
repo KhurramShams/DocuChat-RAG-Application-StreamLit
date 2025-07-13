@@ -109,7 +109,7 @@ if Display:
                         embedding=embedding_function,
                         index_name="rag-index",
                         metadatas=metadatas,
-                        pinecone_api_key=PINECONE_API_KEY
+                        api_key=PINECONE_API_KEY
                     )
                     logger.info(f"Stored {len(chunks)} chunks in Pinecone")
                     st.success("✅ Successfully stored embeddings in Pinecone.")
