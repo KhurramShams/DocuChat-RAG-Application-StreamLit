@@ -100,7 +100,7 @@ if Display:
                 
                 pcdata = Pinecone(api_key=PINECONE_API_KEY)
                 indexes = pcdata.list_indexes()
-                st.text("Available indexes:", indexes)
+                st.text(f"Available indexes: {indexes}")
                 st.success("✅ Working Fine....!")
                 
                 chunks = process_pdf_and_split(file_content)
