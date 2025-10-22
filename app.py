@@ -2,7 +2,8 @@ from pinecone import Pinecone, ServerlessSpec
 import streamlit as st
 import os
 from dotenv import load_dotenv
-from langchain_pinecone import PineconeVectorStore
+# from langchain_pinecone import PineconeVectorStore
+from langchain.vectorstores import Pinecone
 from pdf_utils import validate_pdf
 from pdf_utils import process_pdf_and_split
 from langchain.chains import RetrievalQA
