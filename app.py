@@ -2,14 +2,17 @@ from pinecone import Pinecone, ServerlessSpec
 import streamlit as st
 import os
 from dotenv import load_dotenv
-# from langchain_pinecone import PineconeVectorStore
-from langchain.vectorstores import Pinecone
-from pdf_utils import validate_pdf
-from pdf_utils import process_pdf_and_split
-from langchain.chains import RetrievalQA
-from pdf_utils import load_environment, initialize_pinecone, initialize_embeddings, initialize_llm, store_chunks_in_pinecone, query_llm_with_rag, get_pdf_hash, is_document_already_indexed
-import logging
 
+# ✅ use the new vectorstore package
+from langchain_pinecone import PineconeVectorStore
+
+from pdf_utils import (
+    validate_pdf,
+    process_pdf_and_split,
+    load_environment, initialize_pinecone, initialize_embeddings, initialize_llm,
+    store_chunks_in_pinecone, query_llm_with_rag, get_pdf_hash, is_document_already_indexed
+)
+import logging
 
 load_dotenv()
 
@@ -48,11 +51,12 @@ except Exception as e:
     st.stop()
 
 # Initialize PineconeVectorStore
+# Initialize PineconeVectorStore
 try:
     vector_store = PineconeVectorStore(
-    index_name="rag-index",
-    embedding=embedding_function,
-    pinecone_api_key=PINECONE_API_KEY
+        index_name="rag-index",
+        embedding=embedding_function,
+        pinecone_api_key=PINECONE_API_KEY
     )
 except Exception as e:
     st.error(f"Error initializing DataBase: {str(e)}")
