@@ -1,10 +1,13 @@
 import streamlit as st
-from langchain.text_splitter import RecursiveCharacterTextSplitter 
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 import os
 from dotenv import load_dotenv
 from pinecone import Pinecone, ServerlessSpec
+
+# ✅ new packages
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-from langchain.vectorstores import Pinecone
+from langchain_pinecone import PineconeVectorStore
+
 import logging
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -33,7 +36,10 @@ def initialize_pinecone(api_key, index_name="rag-index"):
     """Initialize Pinecone client and create index if it doesn't exist."""
     try:
         pc = Pinecone(api_key=api_key)
-        if index_name not in pc.list_indexes().names():
+
+        # v5: list_indexes() returns a list of dicts
+        existing = [idx["name"] for idx in pc.list_indexes()]
+        if index_name not in existing:
             pc.create_index(
                 name=index_name,
                 dimension=1536,
@@ -53,7 +59,7 @@ def initialize_embeddings(api_key):
     try:
         embeddings = OpenAIEmbeddings(
             model="text-embedding-3-small",
-            openai_api_key=api_key
+            api_key=api_key
         )
         return embeddings
     except Exception as e:
@@ -65,7 +71,7 @@ def initialize_llm(api_key):
     try:
         llm = ChatOpenAI(
             model_name="gpt-4o-mini",
-            openai_api_key=api_key,
+            api_key=api_key,
             temperature=0.7
         )
         return llm
