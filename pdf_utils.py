@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 from pinecone import Pinecone, ServerlessSpec
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-from langchain_pinecone import PineconeVectorStore
+from langchain.vectorstores import Pinecone
 import logging
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
