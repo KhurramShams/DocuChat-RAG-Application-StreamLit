@@ -1,20 +1,14 @@
-from pinecone import Pinecone, ServerlessSpec
 import streamlit as st
-import os
 from dotenv import load_dotenv
-
-# ✅ use the new vectorstore package
 from langchain_pinecone import PineconeVectorStore
-
-from pdf_utils import (
-    validate_pdf,
-    process_pdf_and_split,
-    load_environment, initialize_pinecone, initialize_embeddings, initialize_llm,
-    store_chunks_in_pinecone, query_llm_with_rag, get_pdf_hash, is_document_already_indexed
-)
+from pdf_utils import validate_pdf
+from pdf_utils import process_pdf_and_split
+from langchain.chains import RetrievalQA
+from pdf_utils import load_environment, initialize_pinecone, initialize_embeddings, initialize_llm, store_chunks_in_pinecone
 import logging
 
 load_dotenv()
+store=True
 
 # Define API keys
 logging.basicConfig(level=logging.INFO)
@@ -31,7 +25,7 @@ except Exception as e:
 # Initialize Pinecone
 try:
     pc = initialize_pinecone(PINECONE_API_KEY)
-    # st.success("Pinecone client initialized successfully")
+    st.success("Pinecone client initialized successfully")
 except Exception as e:
     st.error(f"Error initializing Pinecone: {str(e)}")
     st.stop()
@@ -50,27 +44,12 @@ except Exception as e:
     st.error(f"Error initializing LLM: {str(e)}")
     st.stop()
 
-# Initialize PineconeVectorStore
-# Initialize PineconeVectorStore
-try:
-    vector_store = PineconeVectorStore(
-        index_name="rag-index",
-        embedding=embedding_function,
-        pinecone_api_key=PINECONE_API_KEY
-    )
-except Exception as e:
-    st.error(f"Error initializing DataBase: {str(e)}")
-    st.stop()
-
-if not PINECONE_API_KEY:
-    raise ValueError("PINECONE_API_KEY is not set. Please set it in the environment or .env file.")
 
 #------------------------------------- Streamlit Ui Design
 Display=True
 st.set_page_config(page_title="Your RAG Assistant", page_icon=":material/smart_toy:",layout="centered")
 
 if Display:
-    # Desging App
     st.image("DcouChat_logo.jpg", width=150)
     st.title("AI-Powered Document Assistant")
     st.write("""
@@ -84,54 +63,36 @@ if Display:
     type=["pdf"],
     accept_multiple_files=False
     )
-           
+    
+    # Store PDF validation result
+    if file and "pdf_validated" not in st.session_state:
+        is_valid, msg, extracted_text = validate_pdf(file)
+        st.session_state.pdf_validated = is_valid
+        st.session_state.pdf_msg = msg
+        st.session_state.pdf_text = extracted_text if is_valid else ""
+        
     # Show validation result
     if file:
-
         # Reset file pointer after validation
         file.seek(0)
-        file_content = file.read()
-
-        pdf_hash=get_pdf_hash(file_content)
-
-        if not is_document_already_indexed(pc.Index("rag-index"), pdf_hash):
-
-        # Store PDF validation result
-            if file and "pdf_validated" not in st.session_state:
-                is_valid, msg, extracted_text = validate_pdf(file_content)
-                st.session_state.pdf_validated = is_valid
-                st.session_state.pdf_msg = msg
-                st.session_state.pdf_text = extracted_text if is_valid else ""
-
-            if st.session_state.pdf_validated:
-                st.success("✅ " + st.session_state.pdf_msg)
-                
-                chunks = process_pdf_and_split(file_content)
-                
-                if st.checkbox("🔍 View Chunks for Debugging"):
-                    for i, c in enumerate(chunks):
-                        st.markdown(f"**Chunk {i+1}:**")
-                        st.code(c[:500], language="markdown")
+        if st.session_state.pdf_validated:
+            st.success("✅ " + st.session_state.pdf_msg)
+            chunks = process_pdf_and_split(file)
+            # Store chunks in Pinecone
+            if store:
                 try:
-                    
-                    vector_store=store_chunks_in_pinecone(chunks=chunks,embedding_function=embedding_function, pdf_hash=pdf_hash)
-
-                    logger.info(f"Stored {len(chunks)} chunks in Pinecone")
+                    vector_store = PineconeVectorStore.from_texts(
+                    texts=chunks,
+                    embedding=embedding_function,
+                    index_name="rag-index",
+                    )
                     st.success("✅ Successfully stored embeddings in Pinecone.")
                     store=False
                 except Exception as e:
                     st.error(f"❌ Error storing embeddings in Pinecone: {str(e)}")
-            else:
-                st.error("❌ Error in pdf validation." + st.session_state.pdf_msg)
         else:
-            # ensure downstream checks don’t crash
-            st.session_state.pdf_validated = True
-            st.session_state.pdf_msg = "Document already indexed."
-            st.success("✅ Document already indexed.")
-
-
-            
-
+            st.error("❌ " + st.session_state.pdf_msg)
+    
     if file and st.session_state.pdf_validated:
         question = st.text_area("Ask me! (Max 200 characters)", max_chars=200)
 
@@ -141,7 +102,18 @@ if Display:
             else:
                 with st.spinner("Thinking... Please wait ⏳"):
                     try:
-                        answer=query_llm_with_rag(question,vector_store,llm)
+                    # Initialize PineconeVectorStore
+                        vector_store = PineconeVectorStore(
+                            index_name="rag-index",
+                            embedding=embedding_function
+                        )
+                        qa_chain = RetrievalQA.from_chain_type(
+                            llm=llm,
+                            chain_type="stuff",
+                            retriever=vector_store.as_retriever(search_kwargs={"k": 3}),
+                        )
+                    # Perform similarity search
+                        answer = qa_chain.run(question)
                         st.subheader("Answer:")
                         st.write(answer)
                         st.divider()
